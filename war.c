@@ -15,16 +15,33 @@
 // ============================================================================
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
+#define QTD_TERRITORIOS 5
+#define TAM_NOME 30
+#define TAM_COR 10
 
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
+typedef struct {
+    char nome[TAM_NOME];
+    char cor[TAM_COR];
+    int tropas;
+} Territorio;
 
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
 // Funções de setup e gerenciamento de memória:
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 // Funções de interface com o usuário:
 // Funções de lógica principal do jogo:
 // Função utilitária:
@@ -32,6 +49,38 @@
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
+    struct Territorio territorios[QTD_TERRITORIOS]; // Vetor de territórios
+    int i;
+
+    // Entrada de dados (cadastro dos territórios)
+    printf("=== CADASTRO DE TERRITORIOS ===\n\n");
+
+    for (i = 0; i < QTD_TERRITORIOS; i++) {
+        printf("Territorio %d:\n", i + 1);
+
+        printf("Digite o nome do territorio: ");
+        scanf("%s", territorios[i].nome);
+
+        printf("Digite a cor do exercito: ");
+        scanf("%s", territorios[i].cor);
+
+        printf("Digite a quantidade de tropas: ");
+        scanf("%d", &territorios[i].tropas);
+
+        printf("\n");
+    }
+
+    // Exibição dos dados cadastrados
+    printf("\n=== LISTA DE TERRITORIOS CADASTRADOS ===\n\n");
+
+    for (i = 0; i < QTD_TERRITORIOS; i++) {
+        printf("Territorio %d\n", i + 1);
+        printf("Nome: %s\n", territorios[i].nome);
+        printf("Cor do exercito: %s\n", territorios[i].cor);
+        printf("Tropas: %d\n", territorios[i].tropas);
+        printf("----------------------------\n");
+    }
+    
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
